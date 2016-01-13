@@ -892,6 +892,10 @@ windows_make_so (const char *name, LPVOID load_addr)
 	{
 	  warning (_("dll path for \"%s\" too long or inaccessible"), name);
 	  so->name = so->original_name;
+	  if (rname)
+	    {
+	      free (rname);
+	    }
 	}
     }
   /* Record cygwin1.dll .text start/end.  */
