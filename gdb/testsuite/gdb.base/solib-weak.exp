@@ -22,7 +22,8 @@ require allow_shlib_tests
 # These targets have shared libraries, but weak symbols are not meaningful.
 if {([istarget *-*-mingw*]
      || [istarget *-*-cygwin*]
-     || [istarget *-*-pe*])} {
+     || [istarget *-*-pe*]
+     || [istarget *-*-msys*]) } {
     return 0
 }
 

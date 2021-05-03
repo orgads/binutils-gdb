@@ -94,7 +94,7 @@ case "${gdbserver_host}" in
 			srv_linux_regsets=yes
 			srv_linux_thread_db=yes
 			;;
-  i[34567]86-*-cygwin*)	srv_regobj=""
+  i[34567]86-*-cygwin* | i[34567]86-*-msys*)	srv_regobj=""
 			srv_tgtobj="x86-low.o nat/x86-dregs.o win32-low.o"
 			srv_tgtobj="${srv_tgtobj} win32-i386-low.o"
 			srv_tgtobj="${srv_tgtobj} nat/windows-nat.o"
@@ -387,7 +387,7 @@ case "${gdbserver_host}" in
 			srv_tgtobj="${srv_tgtobj} arch/amd64.o arch/i386.o"
 			srv_mingw=yes
 			;;
-  x86_64-*-cygwin*)	srv_regobj=""
+  x86_64-*-cygwin* | x86_64-*-msys*)	srv_regobj=""
 			srv_tgtobj="x86-low.o nat/x86-dregs.o"
 			srv_tgtobj="${srv_tgtobj} nat/x86-xstate.o i387-fp.o"
 			srv_tgtobj="${srv_tgtobj} win32-low.o win32-i386-low.o"

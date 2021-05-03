@@ -85,7 +85,7 @@ dnl build machine.
 CROSS_COMPILE=
 if test "x$cross_compiling" = "xyes"; then
     case "${host}" in
-    *-cygwin*)
+    *-cygwin* | *-msys*)
         cross_cache=${srcdir}/cross-build/cygwin.cache
         ;;
     *-mingw*)

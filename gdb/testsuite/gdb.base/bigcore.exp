@@ -30,7 +30,8 @@ require isnative
 if { [istarget "*-*-*bsd*"]
      || [istarget "*-*-solaris*"] 
      || [istarget "*-*-darwin*"] 
-     || [istarget "*-*-cygwin*"] } {
+     || [istarget "*-*-cygwin*"] 
+     || [istarget "*-*-msys*"] } {
     untested "kernel lacks sparse corefile support (PR gdb/1551)"
     return
 }

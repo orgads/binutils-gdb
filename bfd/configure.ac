@@ -289,6 +289,10 @@ if test "$enable_shared" = "yes"; then
     SHARED_LDFLAGS="-no-undefined"
     SHARED_LIBADD="-L`pwd`/../libiberty -liberty $SHARED_LIBADD -lcygwin -lkernel32"
   ;;
+  *-*-msys*)
+    SHARED_LDFLAGS="-no-undefined"
+    SHARED_LIBADD="-L`pwd`/../libiberty -liberty $SHARED_LIBADD -lmsys-2.0 -lkernel32"
+  ;;
   esac
 
   if test -n "$SHARED_LIBADD"; then

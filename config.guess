@@ -953,6 +953,9 @@ EOF
 	;;
     amd64:CYGWIN*:*:* | x86_64:CYGWIN*:*:*)
 	GUESS=x86_64-pc-cygwin
+	exit ;;
+    amd64:MSYS*:*:* | x86_64:MSYS*:*:*)
+	echo x86_64-pc-msys
 	;;
     prep*:SunOS:5.*:*)
 	SUN_REL=`echo "$UNAME_RELEASE" | sed -e 's/[^.]*//'`

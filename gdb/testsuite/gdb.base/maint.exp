@@ -188,7 +188,7 @@ gdb_test "maint set per-command off" \
 # The timeout value is raised, because printing all the symbols and
 # statistical information about Cygwin and Windows libraries takes a lot
 # of time.
-if [istarget "*-*-cygwin*"] {
+if { ([istarget "*-*-cygwin*"] || [istarget "*-*-msys*"]) } {
 	set oldtimeout $timeout
 	set timeout [expr $timeout + 500]
 }

@@ -69,7 +69,7 @@ AC_DEFUN([gl_FUNC_DUP2],
       [case "$host_os" in
          mingw*) # on this platform, dup2 always returns 0 for success
            gl_cv_func_dup2_works="guessing no" ;;
-         cygwin*) # on cygwin 1.5.x, dup2(1,1) returns 0
+         cygwin* | msys*) # on cygwin 1.5.x, dup2(1,1) returns 0
            gl_cv_func_dup2_works="guessing no" ;;
          aix* | freebsd*)
                  # on AIX 7.1 and FreeBSD 6.1, dup2 (1,toobig) gives EMFILE,
