@@ -9124,7 +9124,7 @@ else
         # special semantics and is distinct from /, please report it to
         # <bug-gnulib@gnu.org>.
         case $host in
-          *-cygwin | i370-ibm-openedition)
+          *-cygwin | *-msys | i370-ibm-openedition)
             gl_cv_double_slash_root=yes ;;
           *)
             # Be optimistic and assume that / and // are the same when we
@@ -23563,7 +23563,7 @@ else
         # special semantics and is distinct from /, please report it to
         # <bug-gnulib@gnu.org>.
         case $host in
-          *-cygwin | i370-ibm-openedition)
+          *-cygwin | *-msys | i370-ibm-openedition)
             gl_cv_double_slash_root=yes ;;
           *)
             # Be optimistic and assume that / and // are the same when we
@@ -23711,7 +23711,7 @@ else
   case "$host_os" in
          mingw*) # on this platform, dup2 always returns 0 for success
            gl_cv_func_dup2_works="guessing no" ;;
-         cygwin*) # on cygwin 1.5.x, dup2(1,1) returns 0
+         cygwin* | msys*) # on cygwin 1.5.x, dup2(1,1) returns 0
            gl_cv_func_dup2_works="guessing no" ;;
          aix* | freebsd*)
                  # on AIX 7.1 and FreeBSD 6.1, dup2 (1,toobig) gives EMFILE,
@@ -24112,7 +24112,7 @@ if ${gl_cv_func_fcntl_f_dupfd_works+:} false; then :
 else
   if test "$cross_compiling" = yes; then :
   case $host_os in
-            aix* | cygwin* | haiku*)
+            aix* | cygwin* | msys* | haiku*)
                gl_cv_func_fcntl_f_dupfd_works="guessing no" ;;
             *) gl_cv_func_fcntl_f_dupfd_works="guessing yes" ;;
           esac

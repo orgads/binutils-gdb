@@ -2646,7 +2646,8 @@ proc allow_shlib_tests {} {
 	 || [istarget *-*-solaris2*]
 	 || [istarget *-*-mingw*]
 	 || [istarget *-*-cygwin*]
-	 || [istarget *-*-pe*])} {
+	 || [istarget *-*-pe*]
+	 || [istarget *-*-msys*])} {
 	return 1
     }
 
@@ -5323,7 +5324,8 @@ proc gdb_compile {source dest type options} {
 		lappend source "-Wl,$shlib_name"
 	    } elseif { ([istarget "*-*-mingw*"]
 			|| [istarget *-*-cygwin*]
-			|| [istarget *-*-pe*])} {
+			|| [istarget *-*-pe*]
+			|| [istarget *-*-msys*])} {
 		lappend source "${shlib_name}.a"
             } else {
                lappend source $shlib_name
@@ -5331,7 +5333,8 @@ proc gdb_compile {source dest type options} {
             if { $shlib_found == 0 } {
                 set shlib_found 1
 		if { ([istarget "*-*-mingw*"]
-		      || [istarget *-*-cygwin*]) } {
+		      || [istarget *-*-cygwin*]
+		      || [istarget *-*-msys*]) } {
 		    lappend new_options "ldflags=-Wl,--enable-auto-import"
 		}
 		if { [test_compiler_info "gcc-*"] || [test_compiler_info "clang-*"] } {
@@ -5424,6 +5427,7 @@ proc gdb_compile {source dest type options} {
     if { $shlib_load || $shlib_found } {
 	if { ([istarget "*-*-mingw*"]
 	      || [istarget *-*-cygwin*]
+	      || [istarget *-*-msys*]
 	      || [istarget *-*-pe*]) } {
 	    # Do not need anything.
 	} elseif { [istarget *-*-freebsd*] || [istarget *-*-openbsd*] } {
@@ -5522,7 +5526,8 @@ proc gdb_compile {source dest type options} {
     if { $type == "executable" } {
 	if { ([istarget "*-*-mingw*"]
 	      || [istarget "*-*-*djgpp"]
-	      || [istarget "*-*-cygwin*"])} {
+	      || [istarget "*-*-cygwin*"]
+	      || [istarget "*-*-msys*"])} {
 	    # Force output to unbuffered mode, by linking in an object file
 	    # with a global contructor that calls setvbuf.
 	    #
@@ -5668,6 +5673,7 @@ proc gdb_compile_shlib_1 {sources dest options} {
         }
 	"clang-*" {
 	    if { [istarget "*-*-cygwin*"]
+		 || [istarget *-*-msys*]
 		 || [istarget "*-*-mingw*"] } {
 		lappend obj_options "additional_flags=-fPIC"
 	    } else {
@@ -5678,6 +5684,7 @@ proc gdb_compile_shlib_1 {sources dest options} {
             if { [istarget "powerpc*-*-aix*"]
                    || [istarget "rs6000*-*-aix*"]
                    || [istarget "*-*-cygwin*"]
+                   || [istarget "*-*-msys*"]
                    || [istarget "*-*-mingw*"]
                    || [istarget "*-*-pe*"] } {
                 lappend obj_options "additional_flags=-fPIC"
@@ -5743,6 +5750,7 @@ proc gdb_compile_shlib_1 {sources dest options} {
 
 	if { ([istarget "*-*-mingw*"]
 	      || [istarget *-*-cygwin*]
+	      || [istarget *-*-msys*]
 	      || [istarget *-*-pe*]) } {
 	    if { [is_remote host] } {
 		set name [file tail ${dest}]
@@ -5770,6 +5778,7 @@ proc gdb_compile_shlib_1 {sources dest options} {
     if { [is_remote host]
 	 && ([istarget "*-*-mingw*"]
 	     || [istarget *-*-cygwin*]
+	     || [istarget *-*-msys*]
 	     || [istarget *-*-pe*]) } {
 	set dest_tail_name [file tail ${dest}]
 	remote_upload host $dest_tail_name.a ${dest}.a
@@ -6201,7 +6210,7 @@ proc kill_wait_spawned_process { proc_spawn_id } {
 proc spawn_id_get_pid { spawn_id } {
     set testpid [exp_pid -i $spawn_id]
 
-    if { [istarget "*-*-cygwin*"] } {
+    if { ([istarget "*-*-cygwin*"] || [istarget *-*-msys*]) } {
 	# testpid is the Cygwin PID, GDB uses the Windows PID, which
 	# might be different due to the way fork/exec works.
 	set testpid [ exec ps -e | gawk "{ if (\$1 == $testpid) print \$4; }" ]
@@ -7760,6 +7769,7 @@ gdb_caching_proc gdb_has_argv0 {} {
 	  || [istarget *-*-aix*]
 	  || [istarget *-*-gnu*]
 	  || [istarget *-*-cygwin*] || [istarget *-*-mingw32*]
+	  || [istarget *-*-msys*]
 	  || [istarget *-*-*djgpp*] || [istarget *-*-go32*]
 	  || [istarget *-wince-pe] || [istarget *-*-mingw32ce*]
 	  || [istarget *-*-osf*]
@@ -7794,7 +7804,7 @@ gdb_caching_proc gdb_has_argv0 {} {
 
 proc get_build_id { filename } {
     if { ([istarget "*-*-mingw*"]
-	  || [istarget *-*-cygwin*]) } {
+	  || [istarget *-*-cygwin*] || [istarget *-*-msys*]) } {
 	set objdump_program [gdb_find_objdump]
 	set result [catch {set data [exec $objdump_program -p $filename | grep signature | cut "-d " -f4]} output]
 	verbose "result is $result"

@@ -24,7 +24,8 @@ standard_testfile
 require allow_gdbserver_tests
 
 if { [istarget *-*-mingw*]
-     || [istarget *-*-cygwin*] } {
+     || [istarget *-*-cygwin*]
+     || [istarget *-*-msys*] } {
     unsupported "gdbserver does not support --wrapper on this target (PR server/15967)"
     return -1
 }

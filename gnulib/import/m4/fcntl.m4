@@ -70,7 +70,7 @@ AC_DEFUN([gl_FUNC_FCNTL],
          [gl_cv_func_fcntl_f_dupfd_works=yes],
          [gl_cv_func_fcntl_f_dupfd_works=no],
          [case $host_os in
-            aix* | cygwin* | haiku*)
+            aix* | cygwin* | msys* | haiku*)
                gl_cv_func_fcntl_f_dupfd_works="guessing no" ;;
             *) gl_cv_func_fcntl_f_dupfd_works="guessing yes" ;;
           esac])])

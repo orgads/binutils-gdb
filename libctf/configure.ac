@@ -229,6 +229,10 @@ if test "$enable_shared" = "yes"; then
       SHARED_LDFLAGS="-no-undefined"
       CTF_LIBADD="$CTF_LIBADD -lcygwin"
       ;;
+    *-*-msys*)
+      SHARED_LDFLAGS="-no-undefined"
+      CTF_LIBADD="$CTF_LIBADD -lmsys-2.0"
+      ;;
   esac
 fi
 AC_SUBST(SHARED_LDFLAGS)

@@ -16,7 +16,7 @@ AC_DEFUN([gl_DOUBLE_SLASH_ROOT],
         # special semantics and is distinct from /, please report it to
         # <bug-gnulib@gnu.org>.
         case $host in
-          *-cygwin | i370-ibm-openedition)
+          *-cygwin | *-msys | i370-ibm-openedition)
             gl_cv_double_slash_root=yes ;;
           *)
             # Be optimistic and assume that / and // are the same when we

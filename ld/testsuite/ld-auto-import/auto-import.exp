@@ -174,3 +174,65 @@ if [istarget *-pc-cygwin] {
     	fail $msg
     }
 }
+
+if [istarget *-pc-msys] {
+    # Set some libs needed for msys.
+    set MYLIBS "-L/usr/lib -lmsys-2.0 -L/usr/lib/w32api -lkernel32"
+    
+    # Compile the dll.
+    if ![ld_compile "$CC $CFLAGS $SHCFLAG" $srcdir/$subdir/dll.c $tmpdir/dll.o] {
+	fail "compiling shared lib"
+    }
+    if ![ld_special_link "$ld -shared --enable-auto-import -e __cygwin_dll_entry@12 --out-implib=$tmpdir/libstandard.dll.a" $tmpdir/dll.dll "$tmpdir/dll.o $MYLIBS"] {
+	fail "linking shared lib"
+    }
+
+    # Create symbolic link.
+    catch "exec ln -fs dll.dll $tmpdir/libsymlinked_dll.dll.a" ln_catch
+
+    # Compile and link the client program.
+    if ![ld_compile "$CC $CFLAGS $SHCFLAG" $srcdir/$subdir/client.c $tmpdir/client.o] {
+        fail "compiling client"
+    }
+
+    # Check linking with import library.
+    set msg "linking auto-import client using a standard import library"
+    if [ld_special_link $ld $tmpdir/client-linklib.exe "--enable-auto-import --enable-runtime-pseudo-reloc /lib/crt0.o $tmpdir/client.o -L$tmpdir -lstandard $MYLIBS"] {
+	pass $msg
+    } else {
+	fail $msg 
+    }
+
+    # Check linking directly with dll.
+    set msg "linking auto-import client using the dll"
+    if [ld_special_link $ld $tmpdir/client-linkdll.exe "--enable-auto-import --enable-runtime-pseudo-reloc /lib/crt0.o $tmpdir/client.o -L$tmpdir -ldll $MYLIBS"] {
+	pass $msg
+    } else {
+	fail $msg 
+    }
+
+    # Check linking with symlinked dll.
+    set msg "linking auto-import client using symbolic linked dll"
+    if [ld_special_link $ld $tmpdir/client-symlinkeddll.exe "--enable-auto-import --enable-runtime-pseudo-reloc /lib/crt0.o $tmpdir/client.o -L$tmpdir -lsymlinked_dll $MYLIBS"] {
+	pass $msg
+    } else {
+	fail $msg 
+    }
+
+    # Check linking with disabled auto-import, this must produce linking error.
+    set msg "linking with disabled auto-import"
+    if ![ld_special_link $ld $tmpdir/client-failed.exe "--disable-auto-import --enable-runtime-pseudo-reloc /lib/crt0.o $tmpdir/client.o -L$tmpdir -ldll $MYLIBS"] {
+	pass $msg
+    } else {
+	fail $msg
+    }
+
+    # Check that the app works - ie that there is output when the applications runs.
+    set msg "application runtime segfault check" 
+    catch "exec $tmpdir/client-linklib.exe" exec_output
+    if ![string match "" $exec_output] then {
+    	pass $msg
+    } else {
+    	fail $msg
+    }
+}

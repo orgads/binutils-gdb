@@ -6,6 +6,8 @@
   section they will now also display the contents of the .eh_frame_hdr section,
   if present.
 
+* Added built-in support for building on MSYS2 platform.
+
 Changes in 2.42:
 
 * The objdump program has a new command line option -Z/--decompress which

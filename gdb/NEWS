@@ -13,6 +13,8 @@
   the background, resulting in faster startup.  This can be controlled
   using "maint set dwarf synchronous".
 
+* Added built-in support for building on MSYS2 platform.
+
 * Changed commands
 
 disassemble

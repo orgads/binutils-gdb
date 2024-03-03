@@ -894,11 +894,19 @@ windows_make_so (const char *name, LPVOID load_addr)
 	  so->name = so->original_name;
 	}
     }
+#ifdef __MSYS__
+  /* Record msys-2.0.dll .text start/end.  */
+  size_t len = sizeof ("/msys-2.0.dll") - 1;
+  if (so->name.size () >= len
+      && strcasecmp (so->name.c_str () + so->name.size () - len,
+		     "/msys-2.0.dll") == 0)
+#else
   /* Record cygwin1.dll .text start/end.  */
   size_t len = sizeof ("/cygwin1.dll") - 1;
   if (so->name.size () >= len
       && strcasecmp (so->name.c_str () + so->name.size () - len,
 		     "/cygwin1.dll") == 0)
+#endif
     {
       asection *text = NULL;
 

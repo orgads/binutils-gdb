@@ -586,7 +586,7 @@ fi
 # have a separate termcap library, or no curses library at all.
 
 case $host_os in
-  cygwin*)
+  cygwin* | msys*)
     if test -d "$srcdir/libtermcap"; then
       LIBS="../libtermcap/libtermcap.a $LIBS"
       ac_cv_search_tgetent="../libtermcap/libtermcap.a"
@@ -1841,7 +1841,7 @@ WIN32LIBS=
 if test x"$gdb_cv_os_cygwin" = xyes; then
     WIN32LIBS="-luser32"
     case "${target}" in
-	*cygwin*) WIN32LIBS="$WIN32LIBS -limagehlp"
+	*cygwin* | *msys*) WIN32LIBS="$WIN32LIBS -limagehlp"
 	;;
     esac
 fi
@@ -1905,7 +1905,7 @@ AC_SUBST(WIN32LIBS)
 AC_SUBST(WIN32LDAPP)
 
 case "${host}" in
-*-*-cygwin* | *-*-mingw* )
+*-*-cygwin* | *-*-msys* | *-*-mingw* )
     configdir="win"
     ;;
 *)

@@ -198,6 +198,10 @@ if test "$enable_shared" = "yes"; then
       SHARED_LDFLAGS="-no-undefined"
       SHARED_LIBADD="-L`pwd`/../bfd -lbfd -L`pwd`/../libiberty -liberty $SHARED_LIBADD"
       ;;
+    *-*-msys*)
+      SHARED_LDFLAGS="-no-undefined"
+      SHARED_LIBADD="-L`pwd`/../bfd -lbfd -L`pwd`/../libiberty -liberty $SHARED_LIBADD"
+      ;;
     *)
       SHARED_LIBADD="../bfd/libbfd.la ${SHARED_LIBADD}"
       SHARED_DEPENDENCIES="../bfd/libbfd.la"

@@ -75,7 +75,7 @@ hpux*|darwin*|macosx*|linux*|solaris2*)
 	if [ -z "$uninstall" ]; then
 		chmod 755 ${INSTALLDIR}/${LIBNAME}
 	fi ;;
-cygwin*|mingw*)
+cygwin*|msys*|mingw*)
 	IMPLIBNAME=`echo ${LIBNAME} \
 		| sed -e 's,^cyg,lib,' -e 's,[0-9]*.dll$,.dll.a,'`
 	if [ -z "$uninstall" ]; then
@@ -162,7 +162,7 @@ hpux1*)
 	fi
 	;;
 
-cygwin*|mingw*)
+cygwin*|msys*|mingw*)
 	# Links to .dlls don't work.  Hence shobj-conf used DLLVERSION.dll
 	# instead of so.SHLIB_MAJOR.SHLIB_MINOR.  The postinstall above
 	# took care of everything else.

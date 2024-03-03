@@ -398,7 +398,7 @@ changequote([,])dnl
 	BUILD_WINDMC='$(WINDMC_PROG)$(EXEEXT)'
 	;;
 changequote(,)dnl
-    i[3-7]86-*-pe* | i[3-7]86-*-cygwin* | i[3-7]86-*-mingw32** | all)
+    i[3-7]86-*-pe* | i[3-7]86-*-cygwin* | i[3-7]86-*-msys* | i[3-7]86-*-mingw32** | all)
 changequote([,])dnl
 	BUILD_DLLTOOL='$(DLLTOOL_PROG)$(EXEEXT)'
 	if test -z "$DLLTOOL_DEFAULT"; then
@@ -443,7 +443,7 @@ changequote([,])dnl
 	BUILD_WINDRES='$(WINDRES_PROG)$(EXEEXT)'
 	BUILD_WINDMC='$(WINDMC_PROG)$(EXEEXT)'
 	;;
-    x86_64-*-mingw* | x86_64-*-cygwin*)
+    x86_64-*-mingw* | x86_64-*-cygwin* | x86_64-*-msys*)
 	BUILD_DLLTOOL='$(DLLTOOL_PROG)$(EXEEXT)'
 	if test -z "$DLLTOOL_DEFAULT"; then
 	    DLLTOOL_DEFAULT="-DDLLTOOL_DEFAULT_MX86_64"
@@ -467,7 +467,7 @@ changequote([,])dnl
     powerpc*-*-aix* | rs6000-*-aix*)
 	od_vectors="$od_vectors objdump_private_desc_xcoff"
 	;;
-    *-*-pe* | *-*-cygwin* | *-*-mingw*)
+    *-*-pe* | *-*-cygwin* | *-*-msys* | *-*-mingw*)
 	 od_vectors="$od_vectors objdump_private_desc_pe"
 	 ;;
     *-*-darwin*)
